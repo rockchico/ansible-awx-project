@@ -3,6 +3,7 @@
     gather_facts: yes
 
     tasks:
+
       - name: Check the current system date.
         command: date
         register: date
@@ -10,3 +11,17 @@
       - name: Print the current system date.
         debug:
           var: date.stdout
+
+
+      - name: Make sure we can connect
+        ping:
+
+      - name: Update the apt cache
+        apt: update_cache=yes cache_valid_time=3600
+
+
+      - name: Install required tools
+        apt: name={{item}} state=present
+        with_items:
+          - unzip
+          - php
